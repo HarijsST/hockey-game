@@ -13,4 +13,5 @@ public class Team {
     @GeneratedValue
     Long teamID;
     String name;
+    int overall;
 }

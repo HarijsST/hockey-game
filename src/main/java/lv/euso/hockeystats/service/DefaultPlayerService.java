@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class DefaultPlayerService implements PlayerService {
@@ -16,8 +17,12 @@ public class DefaultPlayerService implements PlayerService {
     PlayerRepository playerRepository;
     @Autowired
     TeamRepository teamRepository;
+    @Autowired
+    TeamService teamService;
     @Override
     public Player createPlayer(Player player){
+        Random random = new Random();
+        player.setOverall(random.nextInt(50, 101));
         if(player.getTeam() != null){
             Long teamID = player.getTeam().getTeamID();
             Optional<Team> teamFromDB = teamRepository.findById(teamID);
@@ -29,8 +34,9 @@ public class DefaultPlayerService implements PlayerService {
                 player.getTeam().setName("No team");
             }
         }
-        //player.setTeam(null);
-        return playerRepository.save(player);
+        Player savedPlayer = playerRepository.save(player);
+        teamService.updateTeamOverall(player.getTeam().getTeamID());
+        return savedPlayer;
     }
 
     @Override

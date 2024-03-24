@@ -10,4 +10,5 @@ public interface TeamService{
     Team findTeamByID(Long id);
     Team updateTeamInfo(Team team, Long id);
     void deleteTeam(Long id);
+    void updateTeamOverall(Long id);
 }
