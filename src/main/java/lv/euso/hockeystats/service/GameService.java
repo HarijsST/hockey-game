@@ -5,8 +5,6 @@ import lv.euso.hockeystats.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
-
 @Service
 public class GameService{
     @Autowired
@@ -18,14 +16,13 @@ public class GameService{
         Game game = new Game();
         String homeTeamName = teamService.findTeamByID(homeTeamID).getName();
         String awayTeamName = teamService.findTeamByID(awayTeamID).getName();
-        Random rand = new Random();
-        int homeScore = rand.nextInt(10);
-        int awayScore = rand.nextInt(10);
+        int homeScoreFromOverall = teamService.findTeamByID(homeTeamID).getOverall() / 100;
+        int awayScoreFromOverall = teamService.findTeamByID(awayTeamID).getOverall() / 100;
         game.setHomeTeamID(homeTeamID);
-        game.setHomeScore(homeScore);
-        game.setAwayScore(awayScore);
+        game.setHomeScore(homeScoreFromOverall);
+        game.setAwayScore(awayScoreFromOverall);
         game.setAwayTeamID(awayTeamID);
         gameRepository.save(game);
-        return homeTeamName + " " + homeScore + " : " + awayScore + " " + awayTeamName;
+        return homeTeamName + " " + homeScoreFromOverall + " : " + awayScoreFromOverall + " " + awayTeamName;
     }
 }
