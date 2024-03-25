@@ -1,6 +1,7 @@
 package lv.euso.hockeystats.service;
 
 import lv.euso.hockeystats.model.Game;
+import lv.euso.hockeystats.model.Team;
 import lv.euso.hockeystats.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,12 @@ public class GameService{
 
     public String getResult(Long homeTeamID, Long awayTeamID){
         Game game = new Game();
-        String homeTeamName = teamService.findTeamByID(homeTeamID).getName();
-        String awayTeamName = teamService.findTeamByID(awayTeamID).getName();
-        int homeScoreFromOverall = teamService.findTeamByID(homeTeamID).getOverall() / 100;
-        int awayScoreFromOverall = teamService.findTeamByID(awayTeamID).getOverall() / 100;
+        Team homeTeam = teamService.findTeamByID(homeTeamID);
+        Team awayTeam = teamService.findTeamByID(awayTeamID);
+        String homeTeamName = homeTeam.getName();
+        String awayTeamName = awayTeam.getName();
+        int homeScoreFromOverall = homeTeam.getOverall() / 100;
+        int awayScoreFromOverall = awayTeam.getOverall() / 100;
         game.setHomeTeamID(homeTeamID);
         game.setHomeScore(homeScoreFromOverall);
         game.setAwayScore(awayScoreFromOverall);

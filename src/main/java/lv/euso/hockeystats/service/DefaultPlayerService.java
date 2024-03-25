@@ -22,7 +22,7 @@ public class DefaultPlayerService implements PlayerService {
     @Override
     public Player createPlayer(Player player){
         Random random = new Random();
-        player.setOverall(random.nextInt(50, 101));
+        player.setOverall(random.nextInt(0, 101));
         if(player.getTeam() != null){
             Long teamID = player.getTeam().getTeamID();
             Optional<Team> teamFromDB = teamRepository.findById(teamID);
